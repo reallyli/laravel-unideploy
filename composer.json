@@ -1,0 +1,32 @@
+{
+    "name": "reallyli/laravel-unideploy",
+    "description": "Laravel Deployer",
+    "keywords": ["deployer", "laravel", "deploy"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "reallyli",
+            "email": "zlisreallyli@gmail.com"
+        }
+    ],
+    "require": {
+        "deployer/deployer": "^6.1",
+        "deployer/recipes": "^6.0",
+        "illuminate/support": "^5.5"
+    },
+    "autoload": {
+       "psr-4": {
+            "Reallyli\\LaravelDeployer\\": "src/LaravelDeployer"
+        },
+        "files": [
+            "src/autoload.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Reallyli\\LaravelDeployer\\LaravelDeployerServiceProvider"
+            ]
+        }
+    }
+}

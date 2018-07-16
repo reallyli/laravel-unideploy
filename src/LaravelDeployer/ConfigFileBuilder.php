@@ -1,0 +1,197 @@
+<?php
+
+namespace Reallyli\LaravelDeployer;
+
+class ConfigFileBuilder
+{
+    const DEFAULT_PHP_VERSION = '7.2';
+
+    protected $laravelHooks = [
+//        'artisan:storage:link',
+        'artisan:view:clear',
+        'artisan:cache:clear',
+        'artisan:config:clear',
+        'artisan:config:cache',
+        'artisan:optimize',
+    ];
+
+    protected $lumenHooks = [
+        'artisan:cache:clear',
+        'artisan:optimize',
+    ];
+
+    protected $configs = [
+        'default' => 'basic',
+        'strategies' => [],
+
+        'hooks' => [
+            'start'   => [
+            ],
+            'build'   => [],
+            'ready'   => [],
+            'done'    => [],
+            'success' => [
+                'success:notify',
+                'record:revision:log'
+            ],
+            'fail'    => [
+                'failed:notify',
+            ],
+        ],
+        'options' => [
+            'application' => "env('APP_NAME', 'Laravel')",
+            'keep_releases' => 6,
+            'php_fpm_service' => 'php7.2-fpm',
+            'group_notify' => false,
+            'env_path' => "env('DEPLOY_PATH') . '/shared/.env'",
+            'notify_channel_url' => ''
+        ],
+        'hosts' => [
+            'example.com' => [
+                'deploy_path' => '/var/www/example.com',
+                'user' => 'root',
+                'branch' => 'master',
+                'forwardAgent' => true,
+                'multiplexing' => true,
+                'stage' => 'devel',
+            ]
+        ],
+        'localhost' => [],
+        'include' => [],
+        'custom_deployer_file' => false,
+    ];
+
+
+    public function __construct()
+    {
+        $basePath = base_path();
+        $this->set('options.repository', exec("cd $basePath && git config --get remote.origin.url") ?? '');
+        
+        $lumen = preg_match('/Lumen/', app()->version());
+        $this->set('hooks.ready', $lumen ? $this->lumenHooks : $this->laravelHooks);
+    }
+
+    /**
+     * Return the configuration value at the given key.
+     * 
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        return array_get($this->configs, $key, $default);
+    }
+
+    /**
+     * Update the configuration array with the given key/value pair.
+     * 
+     * @return ConfigFileGenerator
+     */
+    public function set($key, $value)
+    {
+        array_set($this->configs, $key, $value);
+
+        return $this;
+    }
+
+    /**
+     * Append the given value to the configuration array at the given key.
+     * 
+     * @return ConfigFileGenerator
+     */
+    public function add($key, $value)
+    {
+        $array = array_get($this->configs, $key);
+
+        if (is_array($array)) {
+            $array[] = $value;
+            array_set($this->configs, $key, $array);
+        }
+
+
+        return $this;
+    }
+
+    /**
+     * Return current host configurations at the given key.
+     * 
+     * @return mixed
+     */
+    public function getHost($key)
+    {
+        return array_get(head($this->configs['hosts']), $key);
+    }
+
+    /**
+     * Return the name of the first host in the configurations.
+     * 
+     * @return string
+     */
+    public function getHostname()
+    {
+        return array_search(head($this->configs['hosts']), $this->configs['hosts']);
+    }
+
+    /**
+     * Update the host configurations with the given key/value pair.
+     * 
+     * @return ConfigFileGenerator
+     */
+    public function setHost($key, $value)
+    {
+        $hostname = $this->getHostname();
+
+        if ($key !== 'name') {
+            $this->configs['hosts'][$hostname][$key] = $value;
+            return $this;
+        }
+
+        if ($hostname === $value) {
+            return $this;
+        }
+
+        $this->configs['hosts'][$value] = $this->configs['hosts'][$hostname];
+        unset($this->configs['hosts'][$hostname]);
+        $this->setHost('deploy_path', "/var/www/$value");
+        
+        return $this;
+    }
+
+    /**
+     * Set up defaults values more suitable for forge servers.
+     *
+     * @return ConfigFileGenerator
+     */
+    public function useForge($phpVersion = self::DEFAULT_PHP_VERSION)
+    {
+        $this->reloadFpm($phpVersion);
+        $this->setHost('deploy_path', '/home/forge/' . $this->getHostname());
+        $this->setHost('user', 'forge');
+
+        return $this;
+    }
+
+    /**
+     * Reload PHP-FPM after every deployment.
+     *
+     * @param string $phpVersion The php-fpm version to reload
+     * @return ConfigFileGenerator
+     */
+    public function reloadFpm($phpVersion = self::DEFAULT_PHP_VERSION)
+    {
+        $this->add('hooks.done', 'fpm:reload');
+        $this->set('options.php_fpm_service', "php$phpVersion-fpm");
+
+        return $this;
+    }
+
+    /**
+     * Build a config file object based on the information
+     * collected so far.
+     * 
+     * @return ConfigFile
+     */
+    public function build()
+    {
+        return new ConfigFile($this->configs);
+    }
+}
