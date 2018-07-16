@@ -5,7 +5,7 @@
 # Installation
 
 ```shell
-composer reuqire reallyli/laravel-unideploy
+composer require reallyli/laravel-unideploy
 ```
 
 ## Start
