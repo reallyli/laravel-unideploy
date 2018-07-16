@@ -1,11 +1,11 @@
-# 🚀 Laravel Deployer
+# 🚀 Laravel Project Deployer
 
 > Custom deployment tool
 
 # Installation
 
 ```shell
-composer reuqire reallyli/laravel-deployer
+composer reuqire reallyli/laravel-unideploy
 ```
 
 ## Start
