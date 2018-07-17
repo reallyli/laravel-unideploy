@@ -140,6 +140,10 @@ class DeployFile
                 return $this->renderHostOptions($options);
             })
             ->map(function ($options, $hostname) {
+                $multipleHostName = explode(',', $hostname);
+                if (count($multipleHostName) > 1) {
+                    $hostname = join("','", $multipleHostName);
+                }
                 return "host('$hostname')$options;";
             })
             ->implode("\n\n");
