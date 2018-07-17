@@ -26,13 +26,14 @@ task('init:environment', function () {
 desc('Record revision log');
 task('record:revision:log', function () {
     $filePath = get('deploy_path') . '/revision.log';
+    $date = '[' . date('Y-m-d H:i:s'). ']';
     $revisionMessage = join(',', [
-        '[' . date('Y-m-d H:i:s'). ']',
         'branch:' . get('branch'),
         'environment:' . get('environment'),
         'user:' . get('user'),
         'last_commit_id:' . get('last_commit'),
     ]);
 
-    return run('echo ' . $revisionMessage . ' >> ' . $filePath);
+    run('echo ' . $date . $revisionMessage . ' >> ' . $filePath);
+    writeln('record revision log successfully');
 });

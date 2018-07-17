@@ -26,24 +26,24 @@ function sendGroupNotify(string $content)
 }
 
 task('success:notify', function () {
-    $successMessage = join('', [
-        '🔚🔚Successfully released' . "\n",
-        'environment: ' . get('environment') . "\n",
-        'announcer: ' . get('user') . "\n",
-        'branch: ' . get('branch') . "\n",
-        'application: ' . get('application') . "\n"
+    $successMessage = join("\n", [
+        "\n 🔚🔚Successfully released",
+        'environment: ' . get('environment'),
+        'announcer: ' . get('user'),
+        'branch: ' . get('branch'),
+        'application: ' . get('application')
     ]);
 
     get('group_notify') ? sendGroupNotify($successMessage) : writeln($successMessage);
 })->local();
 
 task('failed:notify', function () {
-    $failedMessage = join('', [
-        '🔙🔙Failed to release' . "\n",
-        'environment: ' . get('environment') . "\n",
-        'announcer: ' . get('user') . "\n",
-        'branch: ' . get('branch') . "\n",
-        'application: ' . get('application') . "\n"
+    $failedMessage = join("\n", [
+        "\n 🔙🔙Failed to release",
+        'environment: ' . get('environment'),
+        'announcer: ' . get('user'),
+        'branch: ' . get('branch'),
+        'application: ' . get('application')
     ]);
 
     get('group_notify') ? sendGroupNotify($failedMessage) : writeln($failedMessage);
