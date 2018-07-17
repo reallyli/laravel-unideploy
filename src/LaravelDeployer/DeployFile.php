@@ -59,7 +59,8 @@ class DeployFile
     public function store()
     {
         $ds = DIRECTORY_SEPARATOR;
-        $path = "vendor{$ds}reallyli{$ds}laravel-deployer{$ds}.build{$ds}deploy.php";
+        $packageName = "reallyli{$ds}laravel-unideploy";
+        $path = "vendor{$ds}{$packageName}{$ds}.build{$ds}deploy.php";
         $dir = dirname($path);
 
         if (! is_dir($dir)) {
