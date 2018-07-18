@@ -27,11 +27,11 @@ function sendGroupNotify(string $content)
 
 task('success:notify', function () {
     $successMessage = join("\n", [
-        "\n 🔚🔚Successfully released",
-        'environment: ' . get('environment'),
+        "\n✈✈Successfully released",
+        'application: ' . get('application'),
         'announcer: ' . get('user'),
         'branch: ' . get('branch'),
-        'application: ' . get('application')
+        'environment: ' . get('environment')
     ]);
 
     get('group_notify') ? sendGroupNotify($successMessage) : writeln($successMessage);
@@ -39,11 +39,11 @@ task('success:notify', function () {
 
 task('failed:notify', function () {
     $failedMessage = join("\n", [
-        "\n 🔙🔙Failed to release",
-        'environment: ' . get('environment'),
+        "\n✈✈Failed to release",
+        'application: ' . get('application'),
         'announcer: ' . get('user'),
         'branch: ' . get('branch'),
-        'application: ' . get('application')
+        'environment: ' . get('environment')
     ]);
 
     get('group_notify') ? sendGroupNotify($failedMessage) : writeln($failedMessage);
