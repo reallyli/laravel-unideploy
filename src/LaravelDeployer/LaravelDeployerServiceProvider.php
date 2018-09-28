@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Reallyli\LaravelDeployer;
 
@@ -15,6 +15,7 @@ class LaravelDeployerServiceProvider extends ServiceProvider
         Commands\DeployInit::class,
         Commands\DeployList::class,
         Commands\DeployRollback::class,
+        Commands\DeployUnlock::class,
         Commands\DeployRun::class,
         Commands\Logs::class,
         Commands\Ssh::class,

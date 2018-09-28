@@ -7,7 +7,7 @@ namespace Deployer;
  */
 
 set('allow_anonymous_stats', false);
-set('git_tty', false); 
+set('git_tty', false);
 
 /**
  * New Laravel Deployer options.
@@ -36,5 +36,6 @@ set('laravel_version', function () {
     $result = run('{{bin/php}} {{release_path}}/artisan --version');
     preg_match_all('/(\d+\.?)+/', $result, $matches);
     $version = $matches[0][0] ?? 5.5;
+
     return $version;
 });

@@ -4,11 +4,14 @@ namespace Reallyli\LaravelDeployer;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Filesystem\Filesystem;
+use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
 use Reallyli\LaravelDeployer\Concerns\RendersCode;
+use Symfony\Component\Yaml\Yaml;
 
 class ConfigFile implements Arrayable
 {
     use RendersCode;
+    use DeployBuilder;
 
     const REPLACEMENT_KEYS = [
         'default',
@@ -35,40 +38,6 @@ class ConfigFile implements Arrayable
         $this->filesystem = app(Filesystem::class);
     }
 
-    public function get($key, $default = null)
-    {
-        return $this->configs->get($key, $default);
-    }
-
-    public function toArray()
-    {
-        return $this->configs->toArray();
-    }
-
-    public function toDeployFile()
-    {
-        return new DeployFile($this->configs->toArray());
-    }
-
-    /**
-     * Parse the `config.stub` file and copy its content onto a new 
-     * `deploy.php` file in the config folder of the Laravel project.
-     * 
-     * @return string
-     */
-    public function store($path = 'config' . DIRECTORY_SEPARATOR . 'deploy.php')
-    {
-        $path = base_path($path);
-
-        if (! is_dir(dirname($path))) {
-            mkdir(dirname($path), 0777, true);
-        }
-
-        $this->filesystem->put($path, (string) $this);
-
-        return $path;
-    }
-
     /**
      * Return the config file as a string after it has been parsed
      * from the `config.stub` file with the `configs` property.
@@ -87,5 +56,48 @@ class ConfigFile implements Arrayable
         };
 
         return $stub;
+    }
+
+    public function get($key, $default = null)
+    {
+        return $this->configs->get($key, $default);
+    }
+
+    public function toArray()
+    {
+        return $this->configs->toArray();
+    }
+
+    public function toDeployFile()
+    {
+        return new DeployFile($this->configs->toArray());
+    }
+
+    /**
+     * Method description:toYml
+     *
+     * @author reallyli <zlisreallyli@outlook.com>
+     * @since 18/9/28
+     * @return mixed
+     * 返回值类型：string，array，object，mixed（多种，不确定的），void（无返回值）
+     */
+    public function toYaml() : string
+    {
+        return Yaml::dump($this->toArray());
+    }
+
+    /**
+     * Parse the `config.stub` file and copy its content onto a new
+     * `deploy.php` file in the config folder of the Laravel project.
+     *
+     * @return string
+     */
+    public function store()
+    {
+        $path = $this->getConfigFullPath();
+
+        $this->filesystem->put($path, $this->toYaml());
+
+        return $path;
     }
 }

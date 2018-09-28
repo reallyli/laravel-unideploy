@@ -9,6 +9,8 @@ class DeployRollback extends BaseCommand
 
     public function handle()
     {
-        $this->dep('rollback');
+        if ($this->confirm('Are you sure rollback to previous release')) {
+            $this->dep('rollback');
+        }
     }
 }

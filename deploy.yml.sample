@@ -1,0 +1,21 @@
+default: basic
+strategies: []
+hooks:
+    start: []
+    build: []
+    ready: [artisan:view:clear]
+    done: [fpm:reload]
+    success: [record:revision:log]
+    fail: []
+options:
+    application: LaravelDeployer
+    keep_releases: 6
+    php_fpm_service: php7.2-fpm
+    group_notify: false
+    notify_channel_url: null
+    repository: null
+    shared_dirs: null
+hosts: []
+localhost: []
+include: []
+custom_deployer_file: false

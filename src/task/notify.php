@@ -4,10 +4,15 @@ namespace Deployer;
 
 /**
  * @param string $content
+ * @throws \Exception
  * @return mixed
  */
 function sendGroupNotify(string $content)
 {
+    if (! get('notify_channel_url')) {
+        throw new \Exception('[Laravel-Deployer]Notification is on but channel url is not set!');
+    }
+
     $data = json_encode(['text' => $content]);
     $ch = curl_init(get('notify_channel_url'));
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -27,7 +32,7 @@ function sendGroupNotify(string $content)
 
 task('success:notify', function () {
     $successMessage = join("\n", [
-        "\n✈✈Successfully released",
+        " 🎈🎉🎊 Successfully released",
         'application: ' . get('application'),
         'announcer: ' . get('user'),
         'branch: ' . get('branch'),
@@ -39,7 +44,7 @@ task('success:notify', function () {
 
 task('failed:notify', function () {
     $failedMessage = join("\n", [
-        "\n✈✈Failed to release",
+        " 🎈🎉🎊 Failed to release",
         'application: ' . get('application'),
         'announcer: ' . get('user'),
         'branch: ' . get('branch'),
@@ -48,7 +53,3 @@ task('failed:notify', function () {
 
     get('group_notify') ? sendGroupNotify($failedMessage) : writeln($failedMessage);
 })->local();
-
-
-
-

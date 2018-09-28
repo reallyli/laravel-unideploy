@@ -39,11 +39,10 @@ class ConfigFileBuilder
             ],
         ],
         'options' => [
-            'application' => "env('APP_NAME', 'Laravel')",
+            'application' => 'LaravelDeployer',
             'keep_releases' => 6,
             'php_fpm_service' => 'php7.2-fpm',
             'group_notify' => false,
-            'env_path' => "env('DEPLOY_PATH') . '/shared/.env'",
             'notify_channel_url' => ''
         ],
         'hosts' => [
@@ -61,7 +60,6 @@ class ConfigFileBuilder
         'custom_deployer_file' => false,
     ];
 
-
     public function __construct()
     {
         $basePath = base_path();
@@ -73,7 +71,7 @@ class ConfigFileBuilder
 
     /**
      * Return the configuration value at the given key.
-     * 
+     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -83,7 +81,7 @@ class ConfigFileBuilder
 
     /**
      * Update the configuration array with the given key/value pair.
-     * 
+     *
      * @return ConfigFileGenerator
      */
     public function set($key, $value)
@@ -95,7 +93,7 @@ class ConfigFileBuilder
 
     /**
      * Append the given value to the configuration array at the given key.
-     * 
+     *
      * @return ConfigFileGenerator
      */
     public function add($key, $value)
@@ -107,13 +105,12 @@ class ConfigFileBuilder
             array_set($this->configs, $key, $array);
         }
 
-
         return $this;
     }
 
     /**
      * Return current host configurations at the given key.
-     * 
+     *
      * @return mixed
      */
     public function getHost($key)
@@ -123,7 +120,7 @@ class ConfigFileBuilder
 
     /**
      * Return the name of the first host in the configurations.
-     * 
+     *
      * @return string
      */
     public function getHostname()
@@ -133,7 +130,7 @@ class ConfigFileBuilder
 
     /**
      * Update the host configurations with the given key/value pair.
-     * 
+     *
      * @return ConfigFileGenerator
      */
     public function setHost($key, $value)
@@ -142,6 +139,7 @@ class ConfigFileBuilder
 
         if ($key !== 'name') {
             $this->configs['hosts'][$hostname][$key] = $value;
+
             return $this;
         }
 
@@ -187,7 +185,7 @@ class ConfigFileBuilder
     /**
      * Build a config file object based on the information
      * collected so far.
-     * 
+     *
      * @return ConfigFile
      */
     public function build()

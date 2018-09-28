@@ -1,12 +1,12 @@
 {
     "name": "reallyli/laravel-unideploy",
     "description": "Custom Unique Laravel Deployer",
-    "keywords": ["deployer", "laravel", "deploy", "reallyli"],
+    "keywords": ["deployer", "laravel", "deploy", "reallyli", "laravel-deploy"],
     "license": "MIT",
     "authors": [
         {
             "name": "reallyli",
-            "email": "zlisreallyli@gmail.com"
+            "email": "skrphper@gmail.com"
         }
     ],
     "require": {
@@ -15,6 +15,16 @@
         "deployer/recipes": "^6.0",
         "illuminate/support": "^5.5"
     },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "codedungeon/phpunit-result-printer": "^0.19.13",
+        "phpunit/phpunit": "^7.0",
+        "orchestra/testbench": "~3.5.0|~3.6.0",
+        "friendsofphp/php-cs-fixer": "^2.5",
+        "phpro/grumphp": "dev-master",
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "doctrine/collections": "^1.5"
+    },
     "autoload": {
        "psr-4": {
             "Reallyli\\LaravelDeployer\\": "src/LaravelDeployer"
@@ -22,6 +32,11 @@
         "files": [
             "src/autoload.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Reallyli\\LaravelDeployer\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "laravel": {

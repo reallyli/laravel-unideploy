@@ -9,6 +9,7 @@ trait ParsesCliParameters
     public function getParametersAsString($parameters = null)
     {
         $parameters = $parameters ?? $this->getParameters();
+
         return (string) new ArrayInput($parameters->toArray(), null);
     }
 
@@ -27,6 +28,7 @@ trait ParsesCliParameters
             })
             ->pipe(function ($arguments) {
                 $command = $arguments->get('command');
+
                 return $command && $arguments->get(0) === $command
                     ? $arguments->forget(0)
                     : $arguments;
@@ -37,6 +39,7 @@ trait ParsesCliParameters
     public function parseOptions()
     {
         $i = 0;
+
         return collect($this->options())
             ->filter(function ($value) {
                 return $value || is_string($value) || is_numeric($value);
@@ -50,14 +53,17 @@ trait ParsesCliParameters
     {
         if ($this->getOutput()->isDebug()) {
             return ['-vvv'];
-        } elseif ($this->getOutput()->isVeryVerbose()) {
-            return ['-vv'];
-        } elseif ($this->getOutput()->isVerbose()) {
-            return ['-v'];
-        } elseif ($this->getOutput()->isQuiet()) {
-            return ['-q'];
-        } else {
-            return [];
         }
+        if ($this->getOutput()->isVeryVerbose()) {
+            return ['-vv'];
+        }
+        if ($this->getOutput()->isVerbose()) {
+            return ['-v'];
+        }
+        if ($this->getOutput()->isQuiet()) {
+            return ['-q'];
+        }
+
+        return [];
     }
 }

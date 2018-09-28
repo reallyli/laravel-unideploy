@@ -17,14 +17,13 @@ namespace Deployer;
  * @param array $options The options that define the behaviour of the command.
  * @return callable A function that can be used as a task.
  */
-function artisan($command, $options = []) 
+function artisan($command, $options = [])
 {
-    return function() use ($command, $options) {
-
-        $versionTooEarly = array_key_exists('min', $options) 
+    return function () use ($command, $options) {
+        $versionTooEarly = array_key_exists('min', $options)
             && laravel_version_compare($options['min'], '<');
 
-        $versionTooLate = array_key_exists('max', $options) 
+        $versionTooLate = array_key_exists('max', $options)
             && laravel_version_compare($options['max'], '>');
 
         if ($versionTooEarly || $versionTooLate) {
@@ -37,11 +36,12 @@ function artisan($command, $options = [])
 
         if (in_array('skipIfNoEnv', $options) && ! test('[ -s {{release_path}}/.env ]')) {
             writeln("<fg=yellow;options=bold;>Warning: </><fg=yellow;>Your .env file is empty! Skipping...</>");
+
             return;
         }
 
-        $artisan = in_array('runInCurrent', $options) 
-            ? '{{deploy_path}}/current/artisan' 
+        $artisan = in_array('runInCurrent', $options)
+            ? '{{deploy_path}}/current/artisan'
             : '{{release_path}}/artisan';
 
         $output = run("{{bin/php}} {{release_path}}/artisan $command");

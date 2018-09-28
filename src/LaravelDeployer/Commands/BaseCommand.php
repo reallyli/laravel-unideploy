@@ -3,14 +3,17 @@
 namespace Reallyli\LaravelDeployer\Commands;
 
 use Illuminate\Console\Command;
+use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
 use Reallyli\LaravelDeployer\Concerns\ParsesCliParameters;
 use Reallyli\LaravelDeployer\ConfigFile;
-use Symfony\Component\Process\Exception\RuntimeException;
+use Reallyli\LaravelDeployer\LaravelDeployerException;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Yaml\Yaml;
 
 class BaseCommand extends Command
 {
     use ParsesCliParameters;
+    use DeployBuilder;
     
     protected $parameters;
     protected $providedFile;
@@ -50,6 +53,7 @@ class BaseCommand extends Command
         if (! $deployFile = $this->getDeployFile()) {
             $this->error("config/deploy.php file not found.");
             $this->error("Please run `php artisan deploy:init` to get started.");
+
             return;
         }
 
@@ -78,22 +82,23 @@ class BaseCommand extends Command
 
     public function getConfigFile()
     {
-        $filepath = base_path('config' . DIRECTORY_SEPARATOR . 'deploy.php');
+        $filepath = $this->getConfigFullPath();
+        throw_unless(file_exists($filepath), LaravelDeployerException::class, 'deploy.yml file not found!');
 
-        if (file_exists($filepath)) {
-            return new ConfigFile(
-                config('deploy') ?? include $filepath
-            );
+        try {
+            $deployConfig = Yaml::parseFile($filepath);
+        } catch (LaravelDeployerException $e) {
+            throw $e;
         }
+        throw_unless($deployConfig, LaravelDeployerException::class, 'deploy.yml is empty!');
+
+        return new ConfigFile($deployConfig);
     }
     
     public function getCustomDeployFile()
     {
-        if (! $configFile = $this->getConfigFile()) {
-            return file_exists(base_path('deploy.php')) ? base_path('deploy.php') : null;
-        }
-
-        if (is_string($custom = $configFile->get('custom_deployer_file'))) {
+        $custom = $this->getConfigFile()->get('custom_deployer_file');
+        if (is_string($custom) && $custom) {
             return file_exists(base_path($custom)) ? base_path($custom) : null;
         }
     }
@@ -105,7 +110,7 @@ class BaseCommand extends Command
             ->setWorkingDirectory(base_path())
             ->setTimeout(null)
             ->setIdleTimeout(null)
-            ->mustRun(function($type, $buffer) {
+            ->mustRun(function ($type, $buffer) {
                 $this->output->write($buffer);
             });
     }
@@ -117,9 +122,9 @@ class BaseCommand extends Command
         }
 
         return (bool) @proc_open('echo 1 >/dev/null', [
-            ['file', '/dev/tty', 'r'], 
-            ['file', '/dev/tty', 'w'], 
-            ['file', '/dev/tty', 'w'], 
+            ['file', '/dev/tty', 'r'],
+            ['file', '/dev/tty', 'w'],
+            ['file', '/dev/tty', 'w'],
         ], $pipes);
     }
 }

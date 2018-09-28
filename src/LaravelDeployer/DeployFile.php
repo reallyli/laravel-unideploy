@@ -2,13 +2,14 @@
 
 namespace Reallyli\LaravelDeployer;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Filesystem\Filesystem;
+use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
 use Reallyli\LaravelDeployer\Concerns\RendersCode;
 
 class DeployFile
 {
     use RendersCode;
+    use DeployBuilder;
     
     const REPLACEMENT_KEYS = [
         'include',
@@ -42,36 +43,6 @@ class DeployFile
         $this->filesystem = app(Filesystem::class);
     }
 
-    public function get($key)
-    {
-        return collect($this->data->get($key, []));
-    }
-
-    public function updateStrategy($strategy)
-    {
-        if (is_string($strategy)) {
-            $this->data->put('default', $strategy);
-        }
-
-        return $this;
-    }
-
-    public function store()
-    {
-        $ds = DIRECTORY_SEPARATOR;
-        $packageName = "reallyli{$ds}laravel-unideploy";
-        $path = "vendor{$ds}{$packageName}{$ds}.build{$ds}deploy.php";
-        $dir = dirname($path);
-
-        if (! is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
-        $this->filesystem->put($path, (string) $this);
-
-        return $path;
-    }
-
     public function __toString()
     {
         $ds = DIRECTORY_SEPARATOR;
@@ -91,9 +62,38 @@ class DeployFile
         return $stub;
     }
 
+    public function get($key)
+    {
+        return collect($this->data->get($key, []));
+    }
+
+    public function updateStrategy($strategy)
+    {
+        if (is_string($strategy)) {
+            $this->data->put('default', $strategy);
+        }
+
+        return $this;
+    }
+
+    public function store()
+    {
+        $path = $this->getDeployFileFullPath();
+        $dir = dirname($path);
+
+        if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $this->filesystem->put($path, (string) $this);
+
+        return $path;
+    }
+
     protected function renderDefault()
     {
         $default = $this->data->get('default', 'basic');
+
         return "set('strategy', '$default');";
     }
 
@@ -128,6 +128,7 @@ class DeployFile
         return $this->get('options')
             ->map(function ($value, $key) {
                 $value = $this->render($value, 0, false);
+
                 return "set('$key', $value);";
             })
             ->implode("\n");
@@ -144,6 +145,7 @@ class DeployFile
                 if (count($multipleHostName) > 1) {
                     $hostname = join("','", $multipleHostName);
                 }
+
                 return "host('$hostname')$options;";
             })
             ->implode("\n\n");
@@ -180,11 +182,13 @@ class DeployFile
             if ($key === 'sshOptions' && is_array($value)) {
                 return collect($value)->map(function ($sshValue, $sshKey) {
                     $sshValue = $this->render($sshValue, 1, false);
+
                     return "    ->addSshOption('$sshKey', $sshValue)";
                 })->implode("\n");
             }
             
             $value = $this->render($value, 1, false);
+
             return in_array($key, static::SPECIAL_HOST_KEYS)
                 ? "    ->$key($value)"
                 : "    ->set('$key', $value)";

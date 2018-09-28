@@ -1,4 +1,5 @@
 /.build/
 /vendor/
-/tests/fixtures/tmp/
+/tests/.build/
+/tests/fixtures/
 .idea

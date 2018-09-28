@@ -57,7 +57,7 @@ require 'strategy/upload.php';
 */
 
 desc('Deploy your application');
-task('deploy', function() {
+task('deploy', function () {
     invoke('ld:check_strategy');
     invoke('deploy:info');
     invoke('strategy:' . get('strategy'));
@@ -70,3 +70,6 @@ after('deploy', 'success');
 // Unlock when deployment fails.
 fail('deploy', 'deploy:failed');
 after('deploy:failed', 'deploy:unlock');
+
+// Rollback
+after('rollback', 'record:rollback:log');
