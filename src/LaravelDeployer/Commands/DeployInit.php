@@ -8,12 +8,12 @@ class DeployInit extends BaseCommand
 {
     protected $builder;
 
-    protected $signature = "deploy:init
+    protected $signature = 'deploy:init
         {hostname? : The hostname of the deployment server}
         {--f|forge : Whether the server is maintained by Laravel Forge}
         {--a|all : Generate configuration with all possible options}
-    ";
-    
+    ';
+
     protected $useDeployerOptions = false;
     protected $description = 'Generate a deploy.php configuration file';
 
@@ -28,7 +28,7 @@ class DeployInit extends BaseCommand
         if ($this->configFileExists()) {
             return;
         }
-        
+
         $this->configureBuilder();
         $this->builder->build()->store();
     }
@@ -122,7 +122,7 @@ class DeployInit extends BaseCommand
 
         if ($this->confirm('Do you want to reload php-fpm after each deployment?')) {
             return $this->builder->reloadFpm($this->askPhpVersion());
-        };
+        }
     }
 
     public function askPhpVersion()
@@ -156,11 +156,11 @@ class DeployInit extends BaseCommand
             $this->builder->add('hooks.build', 'npm:install');
             $this->builder->add('hooks.build', "npm:$build");
         }
-        
+
         if ($this->confirm('Do you want to migrate during deployment?', true)) {
             $this->builder->add('hooks.ready', 'artisan:migrate');
         }
-        
+
         if ($this->confirm('Do you want to terminate horizon after each deployment?')) {
             $this->builder->add('hooks.ready', 'artisan:horizon:terminate');
         }

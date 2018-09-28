@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: reallyli
  * Date: 18/9/28
- * Time: 下午12:20
+ * Time: 下午12:20.
  */
 
 namespace Reallyli\LaravelDeployer;
 
 /**
- * 自定义一个异常处理类
+ * 自定义一个异常处理类.
  */
 class LaravelDeployerException extends \Exception
 {
@@ -17,13 +17,13 @@ class LaravelDeployerException extends \Exception
 
     public function __construct($message, $code = 0, \Exception $previous = null)
     {
-        $message = $this->message . $message;
+        $message = $this->message.$message;
 
         parent::__construct($message, $code, $previous);
     }
 
     public function __toString()
     {
-        return __CLASS__ . ": $this->message[{$this->code}]: {$this->message}\n";
+        return __CLASS__.": $this->message[{$this->code}]: {$this->message}\n";
     }
 }

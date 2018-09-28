@@ -22,12 +22,12 @@ task('strategy:local', [
     'hook:done',
 ]);
 
-/**
+/*
  * Strategy specific options
  */
 
-set('local_deploy_path', __DIR__ . '/../../.build');
-set('local_cache_repository', __DIR__ . '/../../../../..');
+set('local_deploy_path', __DIR__.'/../../.build');
+set('local_cache_repository', __DIR__.'/../../../../..');
 set('local_keep_releases', 1);
 
 set('local_upload_options', [
@@ -38,7 +38,7 @@ set('local_upload_options', [
     ],
 ]);
 
-/**
+/*
  * Strategy specific tasks
  */
 
@@ -62,7 +62,7 @@ task('local:build', function () {
 desc('Upload your locally-built application to your hosts');
 task('local:upload', function () {
     $configs = array_merge_recursive(get('local_upload_options'), [
-        'options' => ['--delete']
+        'options' => ['--delete'],
     ]);
 
     upload('{{local_deploy_path}}/current/', '{{release_path}}', $configs);

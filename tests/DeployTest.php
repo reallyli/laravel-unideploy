@@ -3,15 +3,15 @@
  * Created by PhpStorm.
  * User: reallyli
  * Date: 18/9/28
- * Time: 上午10:49
+ * Time: 上午10:49.
  */
- 
+
 namespace Reallyli\LaravelDeployer\Tests;
 
 class DeployTest extends TestCase
 {
     /**
-     * Method description:testCommand
+     * Method description:testCommand.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28

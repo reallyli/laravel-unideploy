@@ -15,7 +15,7 @@ function sendGroupNotify(string $content)
 
     $data = json_encode(['text' => $content]);
     $ch = curl_init(get('notify_channel_url'));
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt(
@@ -23,7 +23,7 @@ function sendGroupNotify(string $content)
         CURLOPT_HTTPHEADER,
         [
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($data)
+            'Content-Length: '.strlen($data),
         ]
     );
 
@@ -31,24 +31,24 @@ function sendGroupNotify(string $content)
 }
 
 task('success:notify', function () {
-    $successMessage = join("\n", [
-        " 🎈🎉🎊 Successfully released",
-        'application: ' . get('application'),
-        'announcer: ' . get('user'),
-        'branch: ' . get('branch'),
-        'environment: ' . get('environment')
+    $successMessage = implode("\n", [
+        ' 🎈🎉🎊 Successfully released',
+        'application: '.get('application'),
+        'announcer: '.get('user'),
+        'branch: '.get('branch'),
+        'environment: '.get('environment'),
     ]);
 
     get('group_notify') ? sendGroupNotify($successMessage) : writeln($successMessage);
 })->local();
 
 task('failed:notify', function () {
-    $failedMessage = join("\n", [
-        " 🎈🎉🎊 Failed to release",
-        'application: ' . get('application'),
-        'announcer: ' . get('user'),
-        'branch: ' . get('branch'),
-        'environment: ' . get('environment')
+    $failedMessage = implode("\n", [
+        ' 🎈🎉🎊 Failed to release',
+        'application: '.get('application'),
+        'announcer: '.get('user'),
+        'branch: '.get('branch'),
+        'environment: '.get('environment'),
     ]);
 
     get('group_notify') ? sendGroupNotify($failedMessage) : writeln($failedMessage);

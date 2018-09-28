@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: reallyli
  * Date: 18/9/28
- * Time: 下午12:49
+ * Time: 下午12:49.
  */
 
 namespace Reallyli\LaravelDeployer\Concerns;
 
 /**
- * Class DeployBuilder
- * @package Reallyli\LaravelDeployer\Concerns
+ * Class DeployBuilder.
  */
 trait DeployBuilder
 {
@@ -25,7 +24,7 @@ trait DeployBuilder
     private $deployExecutableFilePath = 'deploy.php';
 
     /**
-     * Method description:getConfigFullPath
+     * Method description:getConfigFullPath.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @return string
@@ -37,7 +36,7 @@ trait DeployBuilder
     }
 
     /**
-     * Method description:getDeployFileFullPath
+     * Method description:getDeployFileFullPath.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28
@@ -56,7 +55,7 @@ trait DeployBuilder
     }
 
     /**
-     * Method description:getTestingDeployFileFullPath
+     * Method description:getTestingDeployFileFullPath.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28
@@ -65,11 +64,11 @@ trait DeployBuilder
      */
     public function getTestingDeployFileFullPath() : string
     {
-        return realpath(dirname(__DIR__, 3)) . '/tests/.build/' . $this->deployExecutableFilePath;
+        return realpath(dirname(__DIR__, 3)).'/tests/.build/'.$this->deployExecutableFilePath;
     }
 
     /**
-     * Method description:
+     * Method description:.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28
@@ -78,6 +77,6 @@ trait DeployBuilder
      */
     private function getTestingConfigFullPath() : string
     {
-        return realpath(dirname(__DIR__, 3)) . '/tests/Features/' . $this->deployCustomFilePath;
+        return realpath(dirname(__DIR__, 3)).'/tests/Features/'.$this->deployCustomFilePath;
     }
 }

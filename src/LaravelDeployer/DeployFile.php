@@ -3,14 +3,14 @@
 namespace Reallyli\LaravelDeployer;
 
 use Illuminate\Filesystem\Filesystem;
-use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
 use Reallyli\LaravelDeployer\Concerns\RendersCode;
+use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
 
 class DeployFile
 {
     use RendersCode;
     use DeployBuilder;
-    
+
     const REPLACEMENT_KEYS = [
         'include',
         'default',
@@ -46,12 +46,12 @@ class DeployFile
     public function __toString()
     {
         $ds = DIRECTORY_SEPARATOR;
-        $stub = $this->filesystem->get(__DIR__ . "{$ds}stubs{$ds}deploy.stub");
+        $stub = $this->filesystem->get(__DIR__."{$ds}stubs{$ds}deploy.stub");
 
         foreach (static::REPLACEMENT_KEYS as $key) {
-            $value = call_user_func([$this, 'render' . ucfirst($key)]);
-            $stub = preg_replace('/{{' . $key . '}}/', $value, $stub);
-        };
+            $value = call_user_func([$this, 'render'.ucfirst($key)]);
+            $stub = preg_replace('/{{'.$key.'}}/', $value, $stub);
+        }
 
         // Trim empty lines at the end of file.
         $stub = preg_replace('/\n+$/', '', $stub);
@@ -115,7 +115,7 @@ class DeployFile
                 })->implode("\n");
             })
             ->map(function ($tasks, $strategy) {
-                $title = title_case(str_replace('_', ' ', $strategy)) . ' Strategy';
+                $title = title_case(str_replace('_', ' ', $strategy)).' Strategy';
                 $slug = snake_case($strategy);
 
                 return "desc('$title');\ntask('strategy:$slug', [\n$tasks\n]);";
@@ -143,7 +143,7 @@ class DeployFile
             ->map(function ($options, $hostname) {
                 $multipleHostName = explode(',', $hostname);
                 if (count($multipleHostName) > 1) {
-                    $hostname = join("','", $multipleHostName);
+                    $hostname = implode("','", $multipleHostName);
                 }
 
                 return "host('$hostname')$options;";
@@ -186,14 +186,14 @@ class DeployFile
                     return "    ->addSshOption('$sshKey', $sshValue)";
                 })->implode("\n");
             }
-            
+
             $value = $this->render($value, 1, false);
 
             return in_array($key, static::SPECIAL_HOST_KEYS)
                 ? "    ->$key($value)"
                 : "    ->set('$key', $value)";
         })->implode("\n");
-        
+
         return empty($options) ? '' : "\n$options";
     }
 }

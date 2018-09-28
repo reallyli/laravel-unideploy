@@ -3,18 +3,18 @@
 namespace Reallyli\LaravelDeployer\Commands;
 
 use Illuminate\Console\Command;
-use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
-use Reallyli\LaravelDeployer\Concerns\ParsesCliParameters;
-use Reallyli\LaravelDeployer\ConfigFile;
-use Reallyli\LaravelDeployer\LaravelDeployerException;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Process\Process;
+use Reallyli\LaravelDeployer\ConfigFile;
+use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
+use Reallyli\LaravelDeployer\LaravelDeployerException;
+use Reallyli\LaravelDeployer\Concerns\ParsesCliParameters;
 
 class BaseCommand extends Command
 {
     use ParsesCliParameters;
     use DeployBuilder;
-    
+
     protected $parameters;
     protected $providedFile;
     protected $providedStrategy;
@@ -22,7 +22,7 @@ class BaseCommand extends Command
 
     public function __construct()
     {
-        $deployerOptions = "
+        $deployerOptions = '
             {--s|strategy= : Default deployement strategy}
             {--p|parallel : Run tasks in parallel}
             {--l|limit= : How many host to run in parallel?}
@@ -35,12 +35,12 @@ class BaseCommand extends Command
             {--tag= : Tag to deploy}
             {--revision= : Revision to deploy}
             {--branch= : Branch to deploy}
-        ";
+        ';
 
         if ($this->useDeployerOptions) {
             $this->signature .= $deployerOptions;
         }
-        
+
         parent::__construct();
     }
 
@@ -51,14 +51,14 @@ class BaseCommand extends Command
         $this->providedStrategy = $this->parameters->pull('--strategy');
 
         if (! $deployFile = $this->getDeployFile()) {
-            $this->error("config/deploy.php file not found.");
-            $this->error("Please run `php artisan deploy:init` to get started.");
+            $this->error('config/deploy.php file not found.');
+            $this->error('Please run `php artisan deploy:init` to get started.');
 
             return;
         }
 
         $parameters = $this->getParametersAsString($this->parameters);
-        $depBinary = 'vendor' . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'dep';
+        $depBinary = 'vendor'.DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'dep';
         $this->process("$depBinary --file=$deployFile $command $parameters");
     }
 
@@ -94,7 +94,7 @@ class BaseCommand extends Command
 
         return new ConfigFile($deployConfig);
     }
-    
+
     public function getCustomDeployFile()
     {
         $custom = $this->getConfigFile()->get('custom_deployer_file');
