@@ -32,7 +32,7 @@ class ConfigFileBuilder
             'done'    => [],
             'success' => [
                 'success:notify',
-                'record:revision:log'
+                'record:revision:log',
             ],
             'fail'    => [
                 'failed:notify',
@@ -43,7 +43,7 @@ class ConfigFileBuilder
             'keep_releases' => 6,
             'php_fpm_service' => 'php7.2-fpm',
             'group_notify' => false,
-            'notify_channel_url' => ''
+            'notify_channel_url' => '',
         ],
         'hosts' => [
             'example.com' => [
@@ -53,7 +53,7 @@ class ConfigFileBuilder
                 'forwardAgent' => true,
                 'multiplexing' => true,
                 'stage' => 'devel',
-            ]
+            ],
         ],
         'localhost' => [],
         'include' => [],
@@ -64,7 +64,7 @@ class ConfigFileBuilder
     {
         $basePath = base_path();
         $this->set('options.repository', exec("cd $basePath && git config --get remote.origin.url") ?? '');
-        
+
         $lumen = preg_match('/Lumen/', app()->version());
         $this->set('hooks.ready', $lumen ? $this->lumenHooks : $this->laravelHooks);
     }
@@ -150,7 +150,7 @@ class ConfigFileBuilder
         $this->configs['hosts'][$value] = $this->configs['hosts'][$hostname];
         unset($this->configs['hosts'][$hostname]);
         $this->setHost('deploy_path', "/var/www/$value");
-        
+
         return $this;
     }
 
@@ -162,7 +162,7 @@ class ConfigFileBuilder
     public function useForge($phpVersion = self::DEFAULT_PHP_VERSION)
     {
         $this->reloadFpm($phpVersion);
-        $this->setHost('deploy_path', '/home/forge/' . $this->getHostname());
+        $this->setHost('deploy_path', '/home/forge/'.$this->getHostname());
         $this->setHost('user', 'forge');
 
         return $this;

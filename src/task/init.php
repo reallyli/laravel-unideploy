@@ -39,19 +39,19 @@ set('last_commit_author', function () {
  */
 function recordOperationLog($behavior, $filename)
 {
-    $date = '[' . date('Y-m-d H:i:s'). ']';
-    $revisionMessage = join(',', [
-        'deployer:' . get('user'),
-        'behavior:' . $behavior,
-        'branch:' . get('branch'),
-        'environment:' . get('environment'),
-        'last_commit_id:' . get('last_commit'),
-        'last_commit_message:' . get('last_commit_message'),
-        'last_commit_date:' . get('last_commit_date'),
-        'last_commit_author:' . get('last_commit_author'),
+    $date = '['.date('Y-m-d H:i:s').']';
+    $revisionMessage = implode(',', [
+        'deployer:'.get('user'),
+        'behavior:'.$behavior,
+        'branch:'.get('branch'),
+        'environment:'.get('environment'),
+        'last_commit_id:'.get('last_commit'),
+        'last_commit_message:'.get('last_commit_message'),
+        'last_commit_date:'.get('last_commit_date'),
+        'last_commit_author:'.get('last_commit_author'),
     ]);
-    run('echo ' . $date . $revisionMessage . ' >> ' . get('deploy_path') . '/' . $filename . '.log');
-    writeln('📝 record ' . $behavior . ' log successfully ✔');
+    run('echo '.$date.$revisionMessage.' >> '.get('deploy_path').'/'.$filename.'.log');
+    writeln('📝 record '.$behavior.' log successfully ✔');
 }
 
 desc('Record revision log');

@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-/**
+/*
  * Throws an exception if current strategy does not exist.
  */
 task('ld:check_strategy', function () {
@@ -16,7 +16,7 @@ task('ld:check_strategy', function () {
     ->shallow()
     ->setPrivate();
 
-/**
+/*
  * Get global starting time of deployment.
  * No matter how many hosts are being deployed on.
  */
@@ -27,7 +27,7 @@ task('ld:get_start_time', function () {
     ->shallow()
     ->setPrivate();
 
-/**
+/*
  * @override
  * Include total execution time in success message.
  */
@@ -49,25 +49,25 @@ task('success', function () {
     ->shallow()
     ->setPrivate();
 
-/**
+/*
  * @override
  * Include strategy in information message.
  */
 task('deploy:info', function () {
     $what = '';
     $branch = get('branch');
-    if (!empty($branch)) {
+    if (! empty($branch)) {
         $what = "<fg=magenta>$branch</fg=magenta>";
     }
-    if (input()->hasOption('tag') && !empty(input()->getOption('tag'))) {
+    if (input()->hasOption('tag') && ! empty(input()->getOption('tag'))) {
         $tag = input()->getOption('tag');
         $what = "tag <fg=magenta>$tag</fg=magenta>";
-    } elseif (input()->hasOption('revision') && !empty(input()->getOption('revision'))) {
+    } elseif (input()->hasOption('revision') && ! empty(input()->getOption('revision'))) {
         $revision = input()->getOption('revision');
         $what = "revision <fg=magenta>$revision</fg=magenta>";
     }
     if (empty($what)) {
-        $what = "<fg=magenta>HEAD</fg=magenta>";
+        $what = '<fg=magenta>HEAD</fg=magenta>';
     }
     writeln("✈︎ Deploying $what on <fg=cyan>{{hostname}}</fg=cyan> with <info>{{strategy}}</info> strategy");
 })

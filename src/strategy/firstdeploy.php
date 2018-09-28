@@ -22,7 +22,7 @@ task('strategy:firstdeploy', [
     'hook:done',
 ]);
 
-/**
+/*
  * Strategy specific tasks
  */
 
@@ -37,9 +37,9 @@ task('firstdeploy:cleanup', function () {
     $filesToDelete = run("echo `ls -A {{deploy_path}} | grep -v '^$filesToKeep$'`");
 
     writeln('');
-    writeln('|' . str_repeat('-', 56));
+    writeln('|'.str_repeat('-', 56));
     writeln('| <fg=yellow;options=bold>[WARNING] You are about to delete some files</>');
-    writeln('|' .str_repeat('-', 56));
+    writeln('|'.str_repeat('-', 56));
     writeln('|');
     writeln('| You are about to delete all files and folders from your');
     writeln('| deployment path that are not deployer folders, that is:');
@@ -49,8 +49,8 @@ task('firstdeploy:cleanup', function () {
     writeln("<info>Deleting:</info> $filesToDelete");
     writeln('<info>From directory:</info> {{deploy_path}}');
     writeln('');
-    
-    $question = "Are you sure you want to continue and delete those elements?";
+
+    $question = 'Are you sure you want to continue and delete those elements?';
     if (get('debug', false) || askConfirmation($question, false)) {
         run("cd {{deploy_path}} && rm -rf $filesToDelete");
     }

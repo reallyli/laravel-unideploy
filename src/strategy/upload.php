@@ -20,11 +20,11 @@ task('strategy:upload', [
     'hook:done',
 ]);
 
-/**
+/*
  * Strategy specific options
  */
 
-set('upload_path', __DIR__ . '/../../../../..');
+set('upload_path', __DIR__.'/../../../../..');
 
 set('upload_options', [
     'options' => [
@@ -34,14 +34,14 @@ set('upload_options', [
     ],
 ]);
 
-/**
+/*
  * Strategy specific tasks
  */
 
 desc('Upload a given folder to your hosts');
 task('upload', function () {
     $configs = array_merge_recursive(get('upload_options'), [
-        'options' => ['--delete']
+        'options' => ['--delete'],
     ]);
 
     upload('{{upload_path}}/', '{{release_path}}', $configs);

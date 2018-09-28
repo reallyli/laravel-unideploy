@@ -2,18 +2,17 @@
 
 namespace Reallyli\LaravelDeployer\Tests;
 
+use Symfony\Component\Yaml\Yaml;
 use Illuminate\Filesystem\Filesystem;
 use Reallyli\LaravelDeployer\ConfigFile;
-use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class YamlParseTest
- * @package Reallyli\LaravelDeployer\Tests
+ * Class YamlParseTest.
  */
 class YamlParseTest extends TestCase
 {
     /**
-     * Method description:testConfigFile
+     * Method description:testConfigFile.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28
@@ -29,7 +28,7 @@ class YamlParseTest extends TestCase
     }
 
     /**
-     * Method description:testDeployFile
+     * Method description:testDeployFile.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28

@@ -12,7 +12,7 @@ trait RendersCode
             case 'string':
                 return (starts_with($value, 'env(') && $allow_env)
                     ? $value
-                    : "'" . addslashes($value) . "'";
+                    : "'".addslashes($value)."'";
             case 'boolean':
                 return $value ? 'true' : 'false';
             default:

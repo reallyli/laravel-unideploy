@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: reallyli
  * Date: 18/9/28
- * Time: 下午3:24
+ * Time: 下午3:24.
  */
 
 namespace Reallyli\LaravelDeployer\Commands;
