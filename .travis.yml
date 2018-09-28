@@ -4,11 +4,6 @@ php:
   - 7.1
   - 7.2
 
-env:
-  matrix:
-    -
-    - DEPENDENCIES=--prefer-lowest
-
 cache:
   directories:
     - $HOME/.composer/cache
@@ -18,7 +13,7 @@ before_install:
   - composer global require hirak/prestissimo
 
 install:
-  - travis_retry composer update --no-progress --profile --no-scripts --no-suggest $DEPENDENCIES
+  - travis_retry composer update --no-progress --profile --no-scripts --no-suggest --prefer-stable
 
 script:
    - vendor/bin/phpunit
