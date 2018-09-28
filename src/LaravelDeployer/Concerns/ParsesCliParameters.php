@@ -45,7 +45,7 @@ trait ParsesCliParameters
                 return $value || is_string($value) || is_numeric($value);
             })
             ->mapWithKeys(function ($value, $key) use (&$i) {
-                return is_bool($value) ? [ $i++ => "--$key" ] : [ "--$key" => $value ];
+                return is_bool($value) ? [$i++ => "--$key"] : ["--$key" => $value];
             });
     }
 

@@ -60,7 +60,7 @@ desc('Deploy your application');
 task('deploy', function () {
     invoke('ld:check_strategy');
     invoke('deploy:info');
-    invoke('strategy:' . get('strategy'));
+    invoke('strategy:'.get('strategy'));
 })->shallow();
 
 // Calculate total execution time on success.

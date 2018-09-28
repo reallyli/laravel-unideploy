@@ -47,13 +47,13 @@ class ConfigFile implements Arrayable
     public function __toString()
     {
         $ds = DIRECTORY_SEPARATOR;
-        $stub = $this->filesystem->get(__DIR__ . "{$ds}stubs{$ds}config.stub");
+        $stub = $this->filesystem->get(__DIR__."{$ds}stubs{$ds}config.stub");
 
         foreach (static::REPLACEMENT_KEYS as $key) {
             $indent = substr_count($key, '.') + 1;
             $value = $this->render(array_get($this->configs, $key), $indent);
-            $stub = preg_replace('/{{' . $key . '}}/', $value, $stub);
-        };
+            $stub = preg_replace('/{{'.$key.'}}/', $value, $stub);
+        }
 
         return $stub;
     }
@@ -74,7 +74,7 @@ class ConfigFile implements Arrayable
     }
 
     /**
-     * Method description:toYml
+     * Method description:toYml.
      *
      * @author reallyli <zlisreallyli@outlook.com>
      * @since 18/9/28

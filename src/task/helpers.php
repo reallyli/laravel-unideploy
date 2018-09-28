@@ -35,7 +35,7 @@ function artisan($command, $options = [])
         }
 
         if (in_array('skipIfNoEnv', $options) && ! test('[ -s {{release_path}}/.env ]')) {
-            writeln("<fg=yellow;options=bold;>Warning: </><fg=yellow;>Your .env file is empty! Skipping...</>");
+            writeln('<fg=yellow;options=bold;>Warning: </><fg=yellow;>Your .env file is empty! Skipping...</>');
 
             return;
         }
@@ -45,7 +45,7 @@ function artisan($command, $options = [])
             : '{{release_path}}/artisan';
 
         $output = run("{{bin/php}} {{release_path}}/artisan $command");
-        
+
         if (in_array('showOutput', $options)) {
             writeln("<info>$output</info>");
         }
@@ -62,12 +62,12 @@ function copyShared($from, $to)
     foreach (get('shared_dirs') as $dir) {
         if (test("[ -d $from/$dir ]")) {
             run("mkdir -p $to/$dir");
-            run("rsync -r --ignore-existing $from/$dir $to/" . dirname(parse($dir)));
+            run("rsync -r --ignore-existing $from/$dir $to/".dirname(parse($dir)));
         }
     }
     foreach (get('shared_files') as $file) {
         if (test("[ -f $from/$file ]")) {
-            run("mkdir -p $to/" . dirname(parse($file)));
+            run("mkdir -p $to/".dirname(parse($file)));
             run("rsync --ignore-existing $from/$file $to/$file");
         }
     }
