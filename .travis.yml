@@ -21,7 +21,6 @@ install:
   - travis_retry composer update --no-progress --profile --no-scripts --no-suggest $DEPENDENCIES
 
 script:
-   - vendor/bin/grumphp run
    - vendor/bin/phpunit
 
 notifications:
