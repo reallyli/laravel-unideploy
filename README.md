@@ -1,5 +1,8 @@
 # 🚀 Laravel Project Deployer
 
+[![StyleCI](https://github.styleci.io/repos/141083390/shield?branch=master)](https://github.styleci.io/repos/141083390)
+
+
 > Custom deployment tool
 
 # Installation
