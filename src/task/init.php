@@ -20,10 +20,6 @@ set('last_commit', function () {
     return run('cd {{release_path}} && git rev-parse HEAD');
 });
 
-set('last_commit_message', function () {
-    return run('cd {{release_path}} && git log -1 --pretty=%B');
-});
-
 set('last_commit_date', function () {
     return run('cd {{release_path}} && git log -1 --format=%cd');
 });
@@ -46,22 +42,19 @@ function recordOperationLog($behavior, $filename)
         'branch:'.get('branch'),
         'environment:'.get('environment'),
         'last_commit_id:'.get('last_commit'),
-        'last_commit_message:'.get('last_commit_message'),
         'last_commit_date:'.get('last_commit_date'),
         'last_commit_author:'.get('last_commit_author'),
     ]);
-    $filterRevisionMessageSpace = str_replace("\n", " ", $revisionMessage);
-
-    run('echo '.$filterRevisionMessageSpace.' >> '.get('deploy_path').'/'.$filename.'.log');
+    run('echo '.$revisionMessage.' >> '.get('deploy_path').'/'.$filename.'.log');
     writeln('📝 record '.$behavior.' log successfully ✔');
 }
 
 desc('Record revision log');
 task('record:revision:log', function () {
-    return recordOperationLog('release', 'revision');
+    recordOperationLog('release', 'revision');
 });
 
 desc('Record rollback log');
 task('record:rollback:log', function () {
-    return recordOperationLog('rollback', 'rollback');
+    recordOperationLog('rollback', 'rollback');
 });
