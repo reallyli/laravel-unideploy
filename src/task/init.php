@@ -39,8 +39,8 @@ set('last_commit_author', function () {
  */
 function recordOperationLog($behavior, $filename)
 {
-    $date = '['.date('Y-m-d H:i:s').']';
     $revisionMessage = implode(',', [
+        '📝['.date('Y-m-d H:i:s').']',
         'deployer:'.get('user'),
         'behavior:'.$behavior,
         'branch:'.get('branch'),
@@ -50,15 +50,15 @@ function recordOperationLog($behavior, $filename)
         'last_commit_date:'.get('last_commit_date'),
         'last_commit_author:'.get('last_commit_author'),
     ]);
-    run('echo '.$date.$revisionMessage.' >> '.get('deploy_path').'/'.$filename.'.log');
+    $filterRevisionMessageSpace = str_replace("\n", " ", $revisionMessage);
+
+    run('echo '.$filterRevisionMessageSpace.' >> '.get('deploy_path').'/'.$filename.'.log');
     writeln('📝 record '.$behavior.' log successfully ✔');
 }
 
 desc('Record revision log');
-
 task('record:revision:log', function () {
-    return recordOperationLog('release
-    ', 'revision');
+    return recordOperationLog('release', 'revision');
 });
 
 desc('Record rollback log');
