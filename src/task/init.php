@@ -35,8 +35,8 @@ set('last_commit_author', function () {
  */
 function recordOperationLog($behavior, $filename)
 {
+    $date = '['.date('Y-m-d H:i:s').']';
     $revisionMessage = implode(',', [
-        '📝['.date('Y-m-d H:i:s').']',
         'deployer:'.get('user'),
         'behavior:'.$behavior,
         'branch:'.get('branch'),
@@ -45,7 +45,8 @@ function recordOperationLog($behavior, $filename)
         'last_commit_date:'.get('last_commit_date'),
         'last_commit_author:'.get('last_commit_author'),
     ]);
-    run('echo '.$revisionMessage.' >> '.get('deploy_path').'/'.$filename.'.log');
+
+    run('echo '.$date.$revisionMessage.' >> '.get('deploy_path').'/'.$filename.'.log');
     writeln('📝 record '.$behavior.' log successfully ✔');
 }
 

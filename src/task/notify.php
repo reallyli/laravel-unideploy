@@ -32,7 +32,7 @@ function sendGroupNotify(string $content)
 
 task('success:notify', function () {
     $successMessage = implode("\n", [
-        ' 🎈🎉🎊 Successfully released',
+        'Successfully released 🚀🎉🎊 ',
         'application: '.get('application'),
         'announcer: '.get('user'),
         'branch: '.get('branch'),
@@ -44,7 +44,7 @@ task('success:notify', function () {
 
 task('failed:notify', function () {
     $failedMessage = implode("\n", [
-        ' 🎈🎉🎊 Failed to release',
+        'Failed to release 🚀👻⚡',
         'application: '.get('application'),
         'announcer: '.get('user'),
         'branch: '.get('branch'),
