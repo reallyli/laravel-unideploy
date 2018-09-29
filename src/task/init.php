@@ -50,7 +50,7 @@ function recordOperationLog($behavior, $filename)
         'last_commit_date:'.get('last_commit_date'),
         'last_commit_author:'.get('last_commit_author'),
     ]);
-    $filterRevisionMessageSpace = str_replace("\n", " ", $revisionMessage);
+    $filterRevisionMessageSpace = str_replace("\n", ' ', $revisionMessage);
 
     run('echo '.$filterRevisionMessageSpace.' >> '.get('deploy_path').'/'.$filename.'.log');
     writeln('📝 record '.$behavior.' log successfully ✔');
