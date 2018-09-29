@@ -4,7 +4,9 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/reallyli/laravel-unideploy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/reallyli/laravel-unideploy/?branch=master)
 [![Build Status](https://travis-ci.org/reallyli/laravel-unideploy.svg?branch=master)](https://travis-ci.org/reallyli/laravel-unideploy)
 
-> Custom deployment tool
+![](https://raw.githubusercontent.com/wiki/reallyli/laravel-unideploy/laravel-unideploy-config.jpg)
+
+> A Deployer-based laravel project deployment extension package.
 
 # Installation
 
@@ -13,15 +15,36 @@ composer require reallyli/laravel-unideploy
 ```
 
 ## Start
+
 ```shell
 php artisan deploy:init
 ```
 
 ## Deploy
+
+Do not specify a deployment branch by default is the current branch
+
 ```shell
 php artisan deploy {staging} --branh={branch}
 ```
 
+## Rollback
+
+Roll back the current version
+
+```shell
+php artisan rollback {staging}
+```
+
+## Unlock
+
+Temporarily unlock the deployment file
+
+```shell
+php artisan unlock {staging} 
+```
+
 ## Links
 
-> Most of the resources come from [laravel-deployer](https://github.com/lorisleiva/laravel-deployer)
+* [Deployer — Deployment tool for PHP](https://deployer.org/)
+
