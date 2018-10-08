@@ -11,7 +11,7 @@
 # Installation
 
 ```shell
-composer require reallyli/laravel-unideploy
+composer require reallyli/laravel-unideploy --dev
 ```
 
 ## Start
@@ -33,7 +33,7 @@ php artisan deploy {staging} --branh={branch}
 Roll back the current version
 
 ```shell
-php artisan rollback {staging}
+php artisan deploy:rollback {staging}
 ```
 
 ## Unlock
@@ -41,7 +41,7 @@ php artisan rollback {staging}
 Temporarily unlock the deployment file
 
 ```shell
-php artisan unlock {staging} 
+php artisan deoloy:unlock {staging} 
 ```
 
 ## Links
