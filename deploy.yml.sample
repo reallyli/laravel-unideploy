@@ -15,6 +15,8 @@ options:
     notify_channel_url: null
     repository: null
     shared_dirs: null
+    log_file_name: laravel.log
+    log_lines: 200
 hosts: []
 localhost: []
 include: []
