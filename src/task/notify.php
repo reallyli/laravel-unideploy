@@ -10,7 +10,7 @@ namespace Deployer;
 function sendGroupNotify(string $content)
 {
     if (! get('notify_channel_url')) {
-        throw new \Exception('[Laravel-Deployer]Notification is on but channel url is not set!');
+        throw new \InvalidArgumentException('[Laravel-Deployer]Notification is on but channel url is not set!');
     }
 
     $data = json_encode(['text' => $content]);
