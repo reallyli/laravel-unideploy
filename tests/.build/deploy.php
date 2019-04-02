@@ -20,6 +20,8 @@ set('group_notify', false);
 set('notify_channel_url', null);
 set('repository', null);
 set('shared_dirs', null);
+set('log_file_name', 'laravel.log');
+set('log_lines', 200);
 
 /*
  * Hosts and localhost
