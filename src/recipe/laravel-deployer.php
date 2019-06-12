@@ -16,7 +16,7 @@ require 'recipe/common.php';
 */
 
 require 'task/init.php';
-require 'task/notify.php';
+require 'task/notification.php';
 
 require 'task/defaults.php';
 require 'task/helpers.php';

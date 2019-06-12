@@ -17,6 +17,8 @@ options:
     shared_dirs: null
     log_file_name: laravel.log
     log_lines: 200
+    notify_by: wechat_bot
+    app_repo_url: https://github.com
 hosts: []
 localhost: []
 include: []
