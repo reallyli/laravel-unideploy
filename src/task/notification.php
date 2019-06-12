@@ -26,7 +26,6 @@ function sendGroupMessage($subject)
 {
     $url = get('notify_channel_url');
 
-
     if (! $url) {
         throw new \InvalidArgumentException('[Laravel-Deployer]Notification is on but channel url is not set!');
     }
@@ -40,13 +39,13 @@ function sendGroupMessage($subject)
                 'news' => [
                     'articles' => [
                         [
-                            'title' => get('user') . ' ' . $subject,
-                            'description' =>  '在 ' . get('environment') . ' 环境更新 ' . get('branch') . ' 分支 ',
+                            'title' => get('user').' '.$subject,
+                            'description' =>  '在 '.get('environment').' 环境更新 '.get('branch').' 分支 ',
                             'url' => get('app_repo_url', 'https://github.com'),
-                            'picurl' => get('pic_url', 'https://picsum.photos/id/' . rand(1, 1000) . '/800/600')
-                        ]
-                    ]
-                ]
+                            'picurl' => get('pic_url', 'https://picsum.photos/id/'.rand(1, 1000).'/800/600'),
+                        ],
+                    ],
+                ],
             ];
             break;
         default:
@@ -57,7 +56,7 @@ function sendGroupMessage($subject)
                 '分支名: '.get('branch'),
                 '环境: '.get('environment'),
             ]);
-            $formParams =  ['text' => $content];
+            $formParams = ['text' => $content];
             break;
     }
 
