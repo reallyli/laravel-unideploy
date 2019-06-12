@@ -45,14 +45,6 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * sep up.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
      * @param \Illuminate\Foundation\Application $app
      */
     protected function getEnvironmentSetUp($app)
