@@ -8,7 +8,7 @@ hooks:
     success: 'record:revision:log'
     fail: {  }
 options:
-    application: LaravelDeployer
+    application: Example
     keep_releases: 6
     php_fpm_service: php7.2-fpm
     group_notify: false
@@ -18,7 +18,7 @@ options:
     log_file_name: laravel.log
     log_lines: 200
     notify_by: wechat_bot
-    app_repo_url: https://github.com
+    app_repo_url: 'https://github.com'
 hosts: {  }
 localhost: {  }
 include: {  }

@@ -38,11 +38,12 @@ class YamlParseTest extends TestCase
     public function testDeployFile()
     {
         $deployConfig = $this->deployYmlConfig;
-        array_set($deployConfig, 'options.application', 'LaravelDeployer');
+        $deployConfig['options']['application'] = 'Example';
+
         $deployConfigToYml = Yaml::dump($deployConfig);
 
         app(Filesystem::class)->put($this->getConfigFullPath(), $deployConfigToYml);
 
-        $this->assertTrue(str_contains($this->deployExecutableFileContent, 'LaravelDeployer'));
+        $this->assertTrue(strpos($this->deployExecutableFileContent, 'Example') !== false);
     }
 }
