@@ -45,14 +45,6 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * sep up.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
      * @param \Illuminate\Foundation\Application $app
      */
     protected function getEnvironmentSetUp($app)
@@ -67,5 +59,15 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return ['Reallyli\LaravelDeployer\LaravelDeployerServiceProvider'];
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+//        parent::tearDown();
     }
 }
