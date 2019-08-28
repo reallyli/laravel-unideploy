@@ -22,25 +22,26 @@ function sendHttpRequest($url, $formParams)
     return curl_exec($ch);
 }
 
-function sendGroupMessage($subject)
+function sendDeployNotification($subject)
 {
     $url = get('notify_channel_url');
 
     if (! $url) {
-        throw new \InvalidArgumentException('[Laravel-Deployer]Notification is on but channel url is not set!');
+        throw new \UnexpectedValueException('[Laravel-Deployer] Not found webhook url!');
     }
 
     $notifyBy = get('notify_by', 'webhook');
 
     switch ($notifyBy) {
         case 'wechat_bot':
+            $content = '在 '.get('environment').' 环境更新 '.get('branch').' 分支 ';
             $formParams = [
                 'msgtype' => 'news',
                 'news' => [
                     'articles' => [
                         [
                             'title' => get('user').' '.$subject,
-                            'description' =>  '在 '.get('environment').' 环境更新 '.get('branch').' 分支 ',
+                            'description' => $content,
                             'url' => get('app_repo_url', 'https://github.com'),
                             'picurl' => get('pic_url', 'https://picsum.photos/id/'.rand(1, 1000).'/800/600'),
                         ],
@@ -60,13 +61,30 @@ function sendGroupMessage($subject)
             break;
     }
 
-    return get('group_notify') ? sendHttpRequest($url, $formParams) : writeln($content);
+    if (get('group_notify')) {
+        sendHttpRequest($url, $formParams);
+    }
+
+    $deployedWebookUrl = get('deployed_webhook_url');
+
+    if ($deployedWebookUrl) {
+        $deployedData = [
+            'application' => get('application'),
+            'user' => get('user'),
+            'branch' => get('branch'),
+            'environment' => get('environment'),
+            'app_repo_url' =>  get('app_repo_url', 'https://github.com')
+        ];
+        sendHttpRequest($deployedWebookUrl, $deployedData);
+    }
+
+    return writeln($content);
 }
 
 task('success:notify', function () {
-    return sendGroupMessage('成功发布新版本！');
+    return sendDeployNotification('成功发布新版本！');
 })->local();
 
 task('failed:notify', function () {
-    return sendGroupMessage('发布新版本失败！');
+    return sendDeployNotification('发布新版本失败！');
 })->local();
