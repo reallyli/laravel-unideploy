@@ -73,7 +73,7 @@ function sendDeployNotification($subject)
             'user' => get('user'),
             'branch' => get('branch'),
             'environment' => get('environment'),
-            'app_repo_url' =>  get('app_repo_url', 'https://github.com')
+            'app_repo_url' =>  get('app_repo_url', 'https://github.com'),
         ];
         sendHttpRequest($deployedWebookUrl, $deployedData);
     }
