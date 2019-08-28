@@ -1,12 +1,10 @@
-# 🚀 Laravel Project Deployer
+# Laravel Deployer
 
 [![StyleCI](https://github.styleci.io/repos/141083390/shield?branch=master)](https://github.styleci.io/repos/141083390)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/reallyli/laravel-unideploy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/reallyli/laravel-unideploy/?branch=master)
 [![Build Status](https://travis-ci.org/reallyli/laravel-unideploy.svg?branch=master)](https://travis-ci.org/reallyli/laravel-unideploy)
 
 ![](https://raw.githubusercontent.com/wiki/reallyli/laravel-unideploy/laravel-unideploy-config.jpg)
-
-> A Deployer-based laravel project deployment extension package.
 
 # Installation
 
