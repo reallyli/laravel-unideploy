@@ -3,8 +3,8 @@
 namespace Reallyli\LaravelDeployer;
 
 use Illuminate\Filesystem\Filesystem;
-use Reallyli\LaravelDeployer\Concerns\RendersCode;
 use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
+use Reallyli\LaravelDeployer\Concerns\RendersCode;
 
 class DeployFile
 {
