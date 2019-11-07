@@ -3,12 +3,12 @@
 namespace Reallyli\LaravelDeployer\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Process\Process;
-use Reallyli\LaravelDeployer\ConfigFile;
 use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
-use Reallyli\LaravelDeployer\LaravelDeployerException;
 use Reallyli\LaravelDeployer\Concerns\ParsesCliParameters;
+use Reallyli\LaravelDeployer\ConfigFile;
+use Reallyli\LaravelDeployer\LaravelDeployerException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Yaml\Yaml;
 
 class BaseCommand extends Command
 {

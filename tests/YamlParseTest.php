@@ -2,9 +2,9 @@
 
 namespace Reallyli\LaravelDeployer\Tests;
 
-use Symfony\Component\Yaml\Yaml;
 use Illuminate\Filesystem\Filesystem;
 use Reallyli\LaravelDeployer\ConfigFile;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class YamlParseTest.

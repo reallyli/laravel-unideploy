@@ -2,11 +2,11 @@
 
 namespace Reallyli\LaravelDeployer;
 
-use Symfony\Component\Yaml\Yaml;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Support\Arrayable;
-use Reallyli\LaravelDeployer\Concerns\RendersCode;
+use Illuminate\Filesystem\Filesystem;
 use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
+use Reallyli\LaravelDeployer\Concerns\RendersCode;
+use Symfony\Component\Yaml\Yaml;
 
 class ConfigFile implements Arrayable
 {

@@ -8,10 +8,10 @@
 
 namespace Reallyli\LaravelDeployer\Tests;
 
-use Symfony\Component\Yaml\Yaml;
 use Illuminate\Filesystem\Filesystem;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Reallyli\LaravelDeployer\Concerns\DeployBuilder;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class TestCase.
