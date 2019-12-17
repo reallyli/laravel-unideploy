@@ -82,9 +82,9 @@ function sendDeployNotification($subject)
 }
 
 task('success:notify', function () {
-    return sendDeployNotification('成功发布新版本！');
+    return sendDeployNotification('发布 '.get('application').' 项目新版本成功！');
 })->local();
 
 task('failed:notify', function () {
-    return sendDeployNotification('发布新版本失败！');
+    return sendDeployNotification('发布 '.get('application').' 项目新版本失败！');
 })->local();
